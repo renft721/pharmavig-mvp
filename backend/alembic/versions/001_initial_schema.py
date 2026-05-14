@@ -9,7 +9,6 @@ from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
-# revision identifiers, used by Alembic.
 revision = '001'
 down_revision = None
 branch_labels = None
@@ -17,44 +16,45 @@ depends_on = None
 
 
 def upgrade() -> None:
-    # Create ENUM types (with checkfirst to avoid errors if they exist)
-    try:
-        sourceType = postgresql.ENUM('aerzteblatt', 'pdf', 'web', 'ema', 'faers', 'pubmed', name='sourcetype')
-        sourceType.create(op.get_bind(), checkfirst=True)
-    except:
-        pass
+    # Create ENUM types using raw SQL with IF NOT EXISTS (idempotent)
+    op.execute("""
+        DO $$ BEGIN
+            CREATE TYPE sourcetype AS ENUM ('aerzteblatt', 'pdf', 'web', 'ema', 'faers', 'pubmed');
+        EXCEPTION WHEN duplicate_object THEN null;
+        END $$;
+    """)
+    op.execute("""
+        DO $$ BEGIN
+            CREATE TYPE findingstatus AS ENUM ('pending_review', 'under_review', 'approved', 'rejected');
+        EXCEPTION WHEN duplicate_object THEN null;
+        END $$;
+    """)
+    op.execute("""
+        DO $$ BEGIN
+            CREATE TYPE severity AS ENUM ('mild', 'moderate', 'severe', 'fatal');
+        EXCEPTION WHEN duplicate_object THEN null;
+        END $$;
+    """)
+    op.execute("""
+        DO $$ BEGIN
+            CREATE TYPE studytype AS ENUM ('rct', 'observational', 'case_report', 'review', 'other');
+        EXCEPTION WHEN duplicate_object THEN null;
+        END $$;
+    """)
+    op.execute("""
+        DO $$ BEGIN
+            CREATE TYPE auditaction AS ENUM ('insert', 'update', 'delete', 'approve', 'reject', 'comment');
+        EXCEPTION WHEN duplicate_object THEN null;
+        END $$;
+    """)
+    op.execute("""
+        DO $$ BEGIN
+            CREATE TYPE userrole AS ENUM ('analyst', 'qppv', 'admin');
+        EXCEPTION WHEN duplicate_object THEN null;
+        END $$;
+    """)
 
-    try:
-        findingStatus = postgresql.ENUM('pending_review', 'under_review', 'approved', 'rejected', name='findingstatus')
-        findingStatus.create(op.get_bind(), checkfirst=True)
-    except:
-        pass
-
-    try:
-        severity = postgresql.ENUM('mild', 'moderate', 'severe', 'fatal', name='severity')
-        severity.create(op.get_bind(), checkfirst=True)
-    except:
-        pass
-
-    try:
-        studyType = postgresql.ENUM('rct', 'observational', 'case_report', 'review', 'other', name='studytype')
-        studyType.create(op.get_bind(), checkfirst=True)
-    except:
-        pass
-
-    try:
-        auditAction = postgresql.ENUM('insert', 'update', 'delete', 'approve', 'reject', 'comment', name='auditaction')
-        auditAction.create(op.get_bind(), checkfirst=True)
-    except:
-        pass
-
-    try:
-        userRole = postgresql.ENUM('analyst', 'qppv', 'admin', name='userrole')
-        userRole.create(op.get_bind(), checkfirst=True)
-    except:
-        pass
-
-    # Create tables
+    # Create tables — use create_type=False so SQLAlchemy doesn't try to create ENUMs again
     op.create_table(
         'drugs',
         sa.Column('id', postgresql.UUID(as_uuid=True), nullable=False),
@@ -73,7 +73,7 @@ def upgrade() -> None:
         sa.Column('id', postgresql.UUID(as_uuid=True), nullable=False),
         sa.Column('url', sa.String(512), nullable=False),
         sa.Column('title', sa.String(255), nullable=False),
-        sa.Column('source_type', postgresql.ENUM('aerzteblatt', 'pdf', 'web', 'ema', 'faers', 'pubmed', name='sourcetype'), nullable=False),
+        sa.Column('source_type', postgresql.ENUM(name='sourcetype', create_type=False), nullable=False),
         sa.Column('published_date', sa.DateTime(), nullable=True),
         sa.Column('language', sa.String(5), nullable=True),
         sa.Column('accessed_date', sa.DateTime(), nullable=False),
@@ -91,16 +91,16 @@ def upgrade() -> None:
         sa.Column('source_id', postgresql.UUID(as_uuid=True), nullable=False),
         sa.Column('adverse_reaction', sa.String(255), nullable=False),
         sa.Column('frequency', sa.String(100), nullable=True),
-        sa.Column('severity', postgresql.ENUM('mild', 'moderate', 'severe', 'fatal', name='severity'), nullable=True),
+        sa.Column('severity', postgresql.ENUM(name='severity', create_type=False), nullable=True),
         sa.Column('affected_population', sa.JSON(), nullable=True),
         sa.Column('author_conclusion', sa.Text(), nullable=True),
-        sa.Column('study_type', postgresql.ENUM('rct', 'observational', 'case_report', 'review', 'other', name='studytype'), nullable=False),
-        sa.Column('status', postgresql.ENUM('pending_review', 'under_review', 'approved', 'rejected', name='findingstatus'), nullable=False),
+        sa.Column('study_type', postgresql.ENUM(name='studytype', create_type=False), nullable=False),
+        sa.Column('status', postgresql.ENUM(name='findingstatus', create_type=False), nullable=False),
         sa.Column('extracted_date', sa.DateTime(), nullable=False),
         sa.Column('created_at', sa.DateTime(), nullable=False),
         sa.Column('updated_at', sa.DateTime(), nullable=False),
-        sa.ForeignKeyConstraint(['drug_id'], ['drugs.id'], ),
-        sa.ForeignKeyConstraint(['source_id'], ['sources.id'], ),
+        sa.ForeignKeyConstraint(['drug_id'], ['drugs.id']),
+        sa.ForeignKeyConstraint(['source_id'], ['sources.id']),
         sa.PrimaryKeyConstraint('id')
     )
     op.create_index('ix_findings_drug_id', 'findings', ['drug_id'])
@@ -112,11 +112,11 @@ def upgrade() -> None:
         sa.Column('id', postgresql.UUID(as_uuid=True), nullable=False),
         sa.Column('finding_id', postgresql.UUID(as_uuid=True), nullable=False),
         sa.Column('reviewer_name', sa.String(255), nullable=False),
-        sa.Column('reviewer_role', postgresql.ENUM('analyst', 'qppv', 'admin', name='userrole'), nullable=False),
+        sa.Column('reviewer_role', postgresql.ENUM(name='userrole', create_type=False), nullable=False),
         sa.Column('comment', sa.Text(), nullable=True),
         sa.Column('decision', sa.String(50), nullable=False),
         sa.Column('created_at', sa.DateTime(), nullable=False),
-        sa.ForeignKeyConstraint(['finding_id'], ['findings.id'], ),
+        sa.ForeignKeyConstraint(['finding_id'], ['findings.id']),
         sa.PrimaryKeyConstraint('id')
     )
     op.create_index('ix_finding_comments_finding_id', 'finding_comments', ['finding_id'])
@@ -126,12 +126,12 @@ def upgrade() -> None:
         sa.Column('id', postgresql.UUID(as_uuid=True), nullable=False),
         sa.Column('table_name', sa.String(100), nullable=False),
         sa.Column('record_id', postgresql.UUID(as_uuid=True), nullable=False),
-        sa.Column('action', postgresql.ENUM('insert', 'update', 'delete', 'approve', 'reject', 'comment', name='auditaction'), nullable=False),
+        sa.Column('action', postgresql.ENUM(name='auditaction', create_type=False), nullable=False),
         sa.Column('old_value', sa.JSON(), nullable=True),
         sa.Column('new_value', sa.JSON(), nullable=True),
         sa.Column('user_id', sa.String(100), nullable=True),
         sa.Column('user_name', sa.String(255), nullable=True),
-        sa.Column('user_role', postgresql.ENUM('analyst', 'qppv', 'admin', name='userrole'), nullable=True),
+        sa.Column('user_role', postgresql.ENUM(name='userrole', create_type=False), nullable=True),
         sa.Column('timestamp', sa.DateTime(), nullable=False),
         sa.Column('ip_address', sa.String(45), nullable=True),
         sa.PrimaryKeyConstraint('id')
@@ -143,7 +143,6 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    # Drop tables in reverse order of creation
     op.drop_index('ix_audit_logs_timestamp', table_name='audit_logs')
     op.drop_index('ix_audit_logs_action', table_name='audit_logs')
     op.drop_index('ix_audit_logs_record_id', table_name='audit_logs')
@@ -164,10 +163,9 @@ def downgrade() -> None:
     op.drop_index('ix_drugs_active_ingredient', table_name='drugs')
     op.drop_table('drugs')
 
-    # Drop ENUM types
-    postgresql.ENUM('userrole').drop(op.get_bind(), checkfirst=True)
-    postgresql.ENUM('auditaction').drop(op.get_bind(), checkfirst=True)
-    postgresql.ENUM('studytype').drop(op.get_bind(), checkfirst=True)
-    postgresql.ENUM('severity').drop(op.get_bind(), checkfirst=True)
-    postgresql.ENUM('findingstatus').drop(op.get_bind(), checkfirst=True)
-    postgresql.ENUM('sourcetype').drop(op.get_bind(), checkfirst=True)
+    op.execute("DROP TYPE IF EXISTS userrole")
+    op.execute("DROP TYPE IF EXISTS auditaction")
+    op.execute("DROP TYPE IF EXISTS studytype")
+    op.execute("DROP TYPE IF EXISTS severity")
+    op.execute("DROP TYPE IF EXISTS findingstatus")
+    op.execute("DROP TYPE IF EXISTS sourcetype")
