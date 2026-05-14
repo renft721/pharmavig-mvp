@@ -6,6 +6,7 @@ MVP Version 1.0
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 import logging
 
 from config import settings
@@ -41,7 +42,7 @@ async def health_check(db: Session = Depends(get_db)):
     """API health check endpoint with database connectivity check"""
     try:
         # Test database connection
-        db.execute("SELECT 1")
+        db.execute(text("SELECT 1"))
         db_status = "ok"
     except Exception as e:
         logger.error(f"Database health check failed: {str(e)}")
