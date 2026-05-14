@@ -5,7 +5,8 @@ API routes for searches and audit logs
 from fastapi import APIRouter
 
 # Search router
-search_router = APIRouter()
+router = APIRouter()
+search_router = router
 
 @search_router.post("/{drug_id}/trigger")
 async def trigger_search(drug_id: str):
