@@ -6,7 +6,7 @@
     "dockerfilePath": "backend/Dockerfile"
   },
   "deploy": {
-    "startCommand": "bash ./entrypoint.sh",
+    "startCommand": "cd backend && bash ./entrypoint.sh",
     "healthchecks": {
       "readiness": {
         "path": "/health"
