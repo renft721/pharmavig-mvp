@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # PostgreSQL database
+  postgres:
+    image: postgres:15-alpine
+    container_name: pharmavig-postgres
+    environment:
+      POSTGRES_USER: pharmavig
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pharmavig_mvp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - pharmavig-network
+
+  # Redis for Celery
+  redis:
+    image: redis:7-alpine
+    container_name: pharmavig-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - pharmavig-network
+
+  # FastAPI backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pharmavig-backend
+    environment:
+      DATABASE_URL: postgresql://pharmavig:password@postgres:5432/pharmavig_mvp
+      REDIS_URL: redis://redis:6379/0
+      DEBUG: "True"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./backend:/app
+    networks:
+      - pharmavig-network
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  # React frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pharmavig-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - pharmavig-network
+    environment:
+      REACT_APP_API_URL: http://localhost:8000/api/v1
+
+volumes:
+  postgres_data:
+
+networks:
+  pharmavig-network:
+    driver: bridge
