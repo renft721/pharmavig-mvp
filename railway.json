@@ -3,7 +3,7 @@
   "build": {
     "builder": "dockerfile",
     "context": "backend",
-    "dockerfilePath": "Dockerfile"
+    "dockerfilePath": "backend/Dockerfile"
   },
   "deploy": {
     "startCommand": "bash ./entrypoint.sh",
