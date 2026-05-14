@@ -1,0 +1,453 @@
+/* =========================================================
+   PHARMAVIG · Design Tokens
+   ========================================================= */
+
+:root {
+  /* ---------- Brand ---------- */
+  --pv-blue-50:  oklch(0.97 0.012 250);
+  --pv-blue-100: oklch(0.94 0.025 250);
+  --pv-blue-200: oklch(0.88 0.045 250);
+  --pv-blue-300: oklch(0.76 0.080 252);
+  --pv-blue-400: oklch(0.58 0.110 254);
+  --pv-blue-500: oklch(0.43 0.100 255);
+  --pv-blue-600: oklch(0.35 0.080 256);
+  --pv-blue-700: oklch(0.27 0.060 256);
+  --pv-blue-800: oklch(0.20 0.045 256);
+  --pv-blue-900: oklch(0.14 0.030 256);
+
+  --pv-teal-50:  oklch(0.97 0.020 200);
+  --pv-teal-100: oklch(0.93 0.045 200);
+  --pv-teal-200: oklch(0.86 0.075 200);
+  --pv-teal-300: oklch(0.78 0.105 200);
+  --pv-teal-400: oklch(0.72 0.120 200);
+  --pv-teal-500: oklch(0.62 0.115 200);
+  --pv-teal-600: oklch(0.50 0.095 200);
+  --pv-teal-700: oklch(0.40 0.075 200);
+
+  --pv-orange-50:  oklch(0.97 0.020 50);
+  --pv-orange-100: oklch(0.93 0.050 50);
+  --pv-orange-200: oklch(0.85 0.105 50);
+  --pv-orange-300: oklch(0.78 0.150 50);
+  --pv-orange-400: oklch(0.72 0.175 50);
+  --pv-orange-500: oklch(0.70 0.170 50);
+  --pv-orange-600: oklch(0.60 0.155 45);
+  --pv-orange-700: oklch(0.50 0.130 42);
+
+  /* ---------- Neutrals ---------- */
+  --pv-ink-0:    #ffffff;
+  --pv-ink-25:   oklch(0.992 0.004 250);
+  --pv-ink-50:   oklch(0.978 0.006 250);
+  --pv-ink-100:  oklch(0.955 0.008 250);
+  --pv-ink-200:  oklch(0.920 0.010 250);
+  --pv-ink-300:  oklch(0.860 0.012 250);
+  --pv-ink-400:  oklch(0.700 0.014 250);
+  --pv-ink-500:  oklch(0.560 0.016 252);
+  --pv-ink-600:  oklch(0.440 0.020 254);
+  --pv-ink-700:  oklch(0.330 0.025 255);
+  --pv-ink-800:  oklch(0.220 0.030 256);
+  --pv-ink-900:  oklch(0.140 0.030 256);
+
+  /* ---------- Semantic ---------- */
+  --pv-success-50:  oklch(0.96 0.030 155);
+  --pv-success-100: oklch(0.92 0.060 155);
+  --pv-success-500: oklch(0.62 0.150 150);
+  --pv-success-600: oklch(0.52 0.140 150);
+  --pv-success-700: oklch(0.40 0.110 150);
+
+  --pv-danger-50:   oklch(0.96 0.025 25);
+  --pv-danger-100:  oklch(0.92 0.055 25);
+  --pv-danger-500:  oklch(0.60 0.200 25);
+  --pv-danger-600:  oklch(0.52 0.190 25);
+  --pv-danger-700:  oklch(0.42 0.160 25);
+
+  --pv-warn-50:     oklch(0.97 0.035 90);
+  --pv-warn-100:    oklch(0.93 0.080 90);
+  --pv-warn-500:    oklch(0.78 0.150 85);
+  --pv-warn-600:    oklch(0.68 0.150 80);
+  --pv-warn-700:    oklch(0.50 0.110 75);
+
+  --pv-conflict-50:   oklch(0.96 0.035 50);
+  --pv-conflict-100:  oklch(0.92 0.075 50);
+  --pv-conflict-500:  oklch(0.70 0.170 50);
+  --pv-conflict-600:  oklch(0.62 0.165 48);
+  --pv-conflict-700:  oklch(0.48 0.135 45);
+
+  --pv-pending-50:  var(--pv-ink-50);
+  --pv-pending-100: var(--pv-ink-100);
+  --pv-pending-500: var(--pv-ink-500);
+  --pv-pending-700: var(--pv-ink-700);
+
+  /* ---------- Aliases ---------- */
+  --pv-bg:            var(--pv-ink-25);
+  --pv-surface:       var(--pv-ink-0);
+  --pv-surface-2:     var(--pv-ink-50);
+  --pv-border:        var(--pv-ink-200);
+  --pv-border-strong: var(--pv-ink-300);
+  --pv-text:          var(--pv-ink-800);
+  --pv-text-muted:    var(--pv-ink-500);
+  --pv-text-soft:     var(--pv-ink-600);
+  --pv-headline:      var(--pv-ink-900);
+
+  --pv-brand:        var(--pv-blue-700);
+  --pv-brand-soft:   var(--pv-blue-50);
+  --pv-ai:           var(--pv-teal-400);
+  --pv-ai-soft:      var(--pv-teal-50);
+  --pv-action:       var(--pv-orange-500);
+  --pv-action-hover: var(--pv-orange-600);
+
+  /* ---------- Type ---------- */
+  --pv-font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --pv-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* ---------- Spacing ---------- */
+  --pv-s-1: 4px;
+  --pv-s-2: 8px;
+  --pv-s-3: 12px;
+  --pv-s-4: 16px;
+  --pv-s-5: 20px;
+  --pv-s-6: 24px;
+  --pv-s-8: 32px;
+  --pv-s-10: 40px;
+  --pv-s-12: 48px;
+  --pv-s-16: 64px;
+
+  /* ---------- Radius ---------- */
+  --pv-r-xs: 4px;
+  --pv-r-sm: 6px;
+  --pv-r-md: 10px;
+  --pv-r-lg: 14px;
+  --pv-r-xl: 20px;
+  --pv-r-2xl: 28px;
+  --pv-r-pill: 999px;
+
+  /* ---------- Elevation ---------- */
+  --pv-shadow-xs: 0 1px 1px oklch(0.20 0.03 256 / 0.04);
+  --pv-shadow-sm: 0 1px 2px oklch(0.20 0.03 256 / 0.06), 0 1px 1px oklch(0.20 0.03 256 / 0.04);
+  --pv-shadow-md: 0 4px 12px oklch(0.20 0.03 256 / 0.06), 0 2px 4px oklch(0.20 0.03 256 / 0.04);
+  --pv-shadow-lg: 0 12px 32px oklch(0.20 0.03 256 / 0.10), 0 4px 8px oklch(0.20 0.03 256 / 0.05);
+  --pv-shadow-focus: 0 0 0 3px oklch(0.58 0.11 254 / 0.30);
+
+  /* ---------- Motion ---------- */
+  --pv-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --pv-dur-fast: 120ms;
+  --pv-dur: 200ms;
+  --pv-dur-slow: 320ms;
+}
+
+/* =========================================================
+   BASE RESET
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--pv-bg);
+  font-family: var(--pv-font-sans);
+  color: var(--pv-text);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+.pv-display { font-size: 56px; font-weight: 700; line-height: 1.04; letter-spacing: -0.025em; color: var(--pv-headline); }
+.pv-h1 { font-size: 40px; font-weight: 700; line-height: 1.1; letter-spacing: -0.022em; color: var(--pv-headline); margin: 0; }
+.pv-h2 { font-size: 28px; font-weight: 700; line-height: 1.2; letter-spacing: -0.018em; color: var(--pv-headline); margin: 0; }
+.pv-h3 { font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: -0.012em; color: var(--pv-headline); margin: 0; }
+.pv-h4 { font-size: 16px; font-weight: 600; line-height: 1.35; letter-spacing: -0.008em; color: var(--pv-headline); margin: 0; }
+.pv-body { font-size: 15px; line-height: 1.55; color: var(--pv-text); margin: 0; }
+.pv-body-sm { font-size: 13.5px; line-height: 1.5; color: var(--pv-text); margin: 0; }
+.pv-caption { font-size: 12px; line-height: 1.4; color: var(--pv-text-muted); letter-spacing: 0.005em; margin: 0; }
+.pv-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pv-teal-600); margin: 0; }
+.pv-mono { font-family: var(--pv-font-mono); font-size: 12.5px; letter-spacing: -0.01em; }
+
+/* =========================================================
+   CARD
+   ========================================================= */
+.pv-card {
+  background: var(--pv-surface);
+  border: 1px solid var(--pv-border);
+  border-radius: var(--pv-r-lg);
+  box-shadow: var(--pv-shadow-sm);
+}
+.pv-card-flat {
+  background: var(--pv-surface);
+  border: 1px solid var(--pv-border);
+  border-radius: var(--pv-r-lg);
+}
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+.pv-hr { border: 0; border-top: 1px solid var(--pv-border); margin: 0; }
+
+/* =========================================================
+   BACKGROUNDS
+   ========================================================= */
+.pv-bg-wash {
+  background:
+    radial-gradient(1100px 600px at 100% -10%, oklch(0.93 0.045 200 / 0.45), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, oklch(0.94 0.025 250 / 0.50), transparent 55%),
+    var(--pv-bg);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+.pv-btn {
+  --_bg: var(--pv-action);
+  --_fg: #fff;
+  --_bd: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--pv-r-pill);
+  border: 1px solid var(--_bd);
+  background: var(--_bg);
+  color: var(--_fg);
+  font: 600 14px/1 var(--pv-font-sans);
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  transition: transform var(--pv-dur-fast) var(--pv-ease),
+              background var(--pv-dur) var(--pv-ease),
+              box-shadow var(--pv-dur) var(--pv-ease);
+  white-space: nowrap;
+  text-decoration: none;
+}
+.pv-btn:hover { background: color-mix(in oklch, var(--_bg), black 6%); }
+.pv-btn:active { transform: translateY(1px); }
+.pv-btn:focus-visible { outline: none; box-shadow: var(--pv-shadow-focus); }
+.pv-btn--sm { height: 34px; padding: 0 14px; font-size: 13px; }
+.pv-btn--lg { height: 52px; padding: 0 22px; font-size: 15px; }
+.pv-btn--primary   { --_bg: var(--pv-action); --_fg: #fff; }
+.pv-btn--secondary { --_bg: var(--pv-surface); --_fg: var(--pv-ink-800); --_bd: var(--pv-border-strong); }
+.pv-btn--secondary:hover { background: var(--pv-ink-50); }
+.pv-btn--brand     { --_bg: var(--pv-blue-700); --_fg: #fff; }
+.pv-btn--ghost     { --_bg: transparent; --_fg: var(--pv-ink-700); }
+.pv-btn--ghost:hover { background: var(--pv-ink-100); }
+.pv-btn--success   { --_bg: var(--pv-success-500); --_fg: #fff; }
+.pv-btn--danger    { --_bg: var(--pv-danger-500); --_fg: #fff; }
+.pv-btn--ai        { --_bg: var(--pv-teal-400); --_fg: var(--pv-blue-900); }
+.pv-btn:disabled   { opacity: 0.45; pointer-events: none; }
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+.pv-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 14px;
+  background: var(--pv-surface);
+  border: 1px solid var(--pv-border-strong);
+  border-radius: var(--pv-r-md);
+  color: var(--pv-text);
+  font: 500 14px/1 var(--pv-font-sans);
+  transition: border-color var(--pv-dur) var(--pv-ease),
+              box-shadow var(--pv-dur) var(--pv-ease);
+  width: 100%;
+}
+.pv-input input,
+.pv-input textarea,
+.pv-input select {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+}
+.pv-input:focus-within { border-color: var(--pv-blue-400); box-shadow: var(--pv-shadow-focus); }
+.pv-input--lg { height: 56px; padding: 0 18px; border-radius: var(--pv-r-lg); font-size: 15px; }
+.pv-input--error { border-color: var(--pv-danger-500); }
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+.pv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--pv-r-pill);
+  font: 600 11.5px/1 var(--pv-font-sans);
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.pv-badge--lg { height: 28px; font-size: 12.5px; padding: 0 12px; }
+.pv-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.95;
+}
+.pv-badge--plain::before { display: none; }
+
+.pv-badge--pending  { background: var(--pv-ink-100);     color: var(--pv-ink-700);     border-color: var(--pv-ink-200); }
+.pv-badge--approved { background: var(--pv-success-50);  color: var(--pv-success-700); border-color: var(--pv-success-100); }
+.pv-badge--rejected { background: var(--pv-danger-50);   color: var(--pv-danger-700);  border-color: var(--pv-danger-100); }
+.pv-badge--review   { background: var(--pv-warn-50);     color: var(--pv-warn-700);    border-color: var(--pv-warn-100); }
+.pv-badge--conflict { background: var(--pv-conflict-50); color: var(--pv-conflict-700); border-color: var(--pv-conflict-100); }
+.pv-badge--ai       { background: var(--pv-teal-50);     color: var(--pv-teal-700);    border-color: var(--pv-teal-100); }
+.pv-badge--brand    { background: var(--pv-blue-50);     color: var(--pv-blue-700);    border-color: var(--pv-blue-100); }
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+.pv-alert {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: var(--pv-r-lg);
+  border: 1px solid var(--pv-border);
+  background: var(--pv-surface);
+}
+.pv-alert__icon {
+  flex: 0 0 36px;
+  height: 36px;
+  width: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--pv-r-md);
+  background: var(--pv-ink-100);
+  color: var(--pv-ink-700);
+  font-weight: 700;
+}
+.pv-alert__title { font: 600 14px/1.3 var(--pv-font-sans); color: var(--pv-headline); margin: 2px 0 4px; }
+.pv-alert__body  { font: 400 13.5px/1.5 var(--pv-font-sans); color: var(--pv-text); }
+
+.pv-alert--info     { background: var(--pv-blue-50);     border-color: var(--pv-blue-100); }
+.pv-alert--info .pv-alert__icon { background: var(--pv-blue-100); color: var(--pv-blue-700); }
+.pv-alert--success  { background: var(--pv-success-50);  border-color: var(--pv-success-100); }
+.pv-alert--success .pv-alert__icon { background: var(--pv-success-100); color: var(--pv-success-700); }
+.pv-alert--warn     { background: var(--pv-warn-50);     border-color: var(--pv-warn-100); }
+.pv-alert--warn .pv-alert__icon { background: var(--pv-warn-100); color: var(--pv-warn-700); }
+.pv-alert--danger   { background: var(--pv-danger-50);   border-color: var(--pv-danger-100); }
+.pv-alert--danger .pv-alert__icon { background: var(--pv-danger-100); color: var(--pv-danger-700); }
+.pv-alert--conflict { background: var(--pv-conflict-50); border-color: var(--pv-conflict-100); }
+.pv-alert--conflict .pv-alert__icon { background: var(--pv-conflict-100); color: var(--pv-conflict-700); }
+.pv-alert--ai       { background: var(--pv-teal-50);     border-color: var(--pv-teal-100); }
+.pv-alert--ai .pv-alert__icon { background: var(--pv-teal-100); color: var(--pv-teal-700); }
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+.pv-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px; }
+.pv-table thead th {
+  text-align: left;
+  padding: 12px 16px;
+  font: 600 11.5px/1 var(--pv-font-sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pv-text-muted);
+  background: var(--pv-ink-50);
+  border-bottom: 1px solid var(--pv-border);
+}
+.pv-table tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--pv-border);
+  vertical-align: middle;
+  color: var(--pv-text);
+}
+.pv-table tbody tr:hover { background: var(--pv-ink-25); cursor: pointer; }
+.pv-table tbody tr:last-child td { border-bottom: 0; }
+.pv-table--rounded {
+  border: 1px solid var(--pv-border);
+  border-radius: var(--pv-r-lg);
+  overflow: hidden;
+  background: var(--pv-surface);
+}
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+.pv-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--pv-blue-100);
+  color: var(--pv-blue-700);
+  display: grid;
+  place-items: center;
+  font: 600 12px/1 var(--pv-font-sans);
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   CHIP
+   ========================================================= */
+.pv-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  background: var(--pv-surface);
+  border: 1px solid var(--pv-border-strong);
+  border-radius: var(--pv-r-pill);
+  color: var(--pv-text);
+  font: 500 12.5px/1 var(--pv-font-sans);
+  cursor: pointer;
+  user-select: none;
+}
+.pv-chip[aria-pressed="true"] { background: var(--pv-blue-700); color: #fff; border-color: var(--pv-blue-700); }
+
+/* =========================================================
+   LIVE DOT
+   ========================================================= */
+.pv-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pv-teal-400);
+  box-shadow: 0 0 0 4px oklch(0.72 0.12 200 / 0.18);
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   PROGRESS BAR
+   ========================================================= */
+.pv-bar {
+  position: relative;
+  height: 6px;
+  border-radius: var(--pv-r-pill);
+  background: var(--pv-ink-100);
+  overflow: hidden;
+}
+.pv-bar > i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--pv-blue-700);
+  border-radius: inherit;
+  display: block;
+}
+.pv-bar--ai > i { background: var(--pv-teal-400); }
+.pv-bar--warn > i { background: var(--pv-warn-500); }
+.pv-bar--danger > i { background: var(--pv-danger-500); }
+
+/* =========================================================
+   KBD shortcut tag
+   ========================================================= */
+kbd {
+  font-family: var(--pv-font-mono);
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--pv-border);
+  color: var(--pv-text-muted);
+  background: var(--pv-surface);
+}

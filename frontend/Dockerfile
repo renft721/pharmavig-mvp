@@ -1,20 +1,21 @@
-FROM node:20-alpine
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
-
-# Install dependencies
 RUN npm ci
 
-# Copy application code
 COPY . .
-
-# Build the application
 RUN npm run build
 
-# Serve with a simple HTTP server
-EXPOSE 3000
+# Production stage — serve with nginx
+FROM nginx:alpine
 
-CMD ["npm", "run", "preview"]
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# SPA routing: forward all 404s to index.html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
