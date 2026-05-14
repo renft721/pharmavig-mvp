@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from datetime import datetime
 import uuid
 
-from database import get_db, Finding, FindingComment, Finding Status, UserRole
+from database import get_db, Finding, FindingComment, FindingStatus, UserRole
 
 router = APIRouter()
 
