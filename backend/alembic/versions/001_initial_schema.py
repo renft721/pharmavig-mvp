@@ -17,24 +17,42 @@ depends_on = None
 
 
 def upgrade() -> None:
-    # Create ENUM types
-    sourceType = postgresql.ENUM('aerzteblatt', 'pdf', 'web', 'ema', 'faers', 'pubmed', name='sourcetype')
-    sourceType.create(op.get_bind(), checkfirst=True)
+    # Create ENUM types (with checkfirst to avoid errors if they exist)
+    try:
+        sourceType = postgresql.ENUM('aerzteblatt', 'pdf', 'web', 'ema', 'faers', 'pubmed', name='sourcetype')
+        sourceType.create(op.get_bind(), checkfirst=True)
+    except:
+        pass
 
-    findingStatus = postgresql.ENUM('pending_review', 'under_review', 'approved', 'rejected', name='findingstatus')
-    findingStatus.create(op.get_bind(), checkfirst=True)
+    try:
+        findingStatus = postgresql.ENUM('pending_review', 'under_review', 'approved', 'rejected', name='findingstatus')
+        findingStatus.create(op.get_bind(), checkfirst=True)
+    except:
+        pass
 
-    severity = postgresql.ENUM('mild', 'moderate', 'severe', 'fatal', name='severity')
-    severity.create(op.get_bind(), checkfirst=True)
+    try:
+        severity = postgresql.ENUM('mild', 'moderate', 'severe', 'fatal', name='severity')
+        severity.create(op.get_bind(), checkfirst=True)
+    except:
+        pass
 
-    studyType = postgresql.ENUM('rct', 'observational', 'case_report', 'review', 'other', name='studytype')
-    studyType.create(op.get_bind(), checkfirst=True)
+    try:
+        studyType = postgresql.ENUM('rct', 'observational', 'case_report', 'review', 'other', name='studytype')
+        studyType.create(op.get_bind(), checkfirst=True)
+    except:
+        pass
 
-    auditAction = postgresql.ENUM('insert', 'update', 'delete', 'approve', 'reject', 'comment', name='auditaction')
-    auditAction.create(op.get_bind(), checkfirst=True)
+    try:
+        auditAction = postgresql.ENUM('insert', 'update', 'delete', 'approve', 'reject', 'comment', name='auditaction')
+        auditAction.create(op.get_bind(), checkfirst=True)
+    except:
+        pass
 
-    userRole = postgresql.ENUM('analyst', 'qppv', 'admin', name='userrole')
-    userRole.create(op.get_bind(), checkfirst=True)
+    try:
+        userRole = postgresql.ENUM('analyst', 'qppv', 'admin', name='userrole')
+        userRole.create(op.get_bind(), checkfirst=True)
+    except:
+        pass
 
     # Create tables
     op.create_table(
